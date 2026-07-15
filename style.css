@@ -1,0 +1,326 @@
+/* Apple Design System Variables */
+:root {
+    --apple-bg: #ffffff;
+    --apple-text-main: #1d1d1f;
+    --apple-text-sub: #86868b;
+    --apple-border: #e8e8ed;
+    --apple-blue: #0071e3;
+    --apple-blue-hover: #0077ed;
+    --apple-gray-btn: #f5f5f7;
+    --apple-gray-btn-hover: #e8e8ed;
+    --apple-list-bg: #f5f5f7;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.022em;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden !important;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    background-color: var(--apple-bg);
+    touch-action: manipulation;
+    -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none !important;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--apple-text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.screen.is-hidden,
+.full-panel.is-hidden,
+.completion-modal.is-hidden {
+    display: none !important;
+}
+
+.main-layout {
+    width: 100%;
+    max-width: 440px;
+    height: 100%;
+    max-height: 680px;
+    padding: 50px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    touch-action: manipulation;
+}
+
+.app-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.app-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.app-header .subtitle {
+    font-size: 13px;
+    color: var(--apple-text-sub);
+    line-height: 1.4;
+}
+
+/* 뷰파인더 */
+.video-container {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 4 / 3;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+#video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.counter-badge {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--apple-text-sub);
+}
+
+#scan-count {
+    color: var(--apple-blue);
+    font-weight: 600;
+}
+
+/* 누적 목록 컨테이너 박스 */
+.list-container {
+    width: 100%;
+    height: 280px;
+    border: none;
+    border-radius: 16px;
+    overflow-y: auto;
+    background: var(--apple-list-bg);
+    padding: 8px 0;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+}
+
+.list-container ul {
+    list-style: none;
+}
+
+.list-container li {
+    border-bottom: none;
+}
+
+.isbn-item {
+    position: relative;
+    background: transparent;
+    overflow: hidden;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.isbn-item__content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 56px 13px 16px;
+    font-size: 14px;
+    font-family: -apple-system-font, "SF Mono", Menlo, monospace;
+    color: var(--apple-text-main);
+    background: var(--apple-list-bg);
+    border-radius: 12px;
+    margin: 4px 8px;
+    overflow: hidden;
+}
+
+.isbn-item__content::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.isbn-item:last-child .isbn-item__content::after {
+    display: none;
+}
+
+.isbn-item__value {
+    flex: 1;
+    word-break: break-all;
+}
+
+.isbn-item__delete {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 56px;
+    height: 28px;
+    border: none;
+    border-radius: 999px;
+    background: rgb(255, 59, 48);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transform: translateY(-50%) translateX(76px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+    transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease;
+}
+
+.isbn-item.is-active-delete .isbn-item__delete {
+    transform: translateY(-50%) translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.isbn-item__delete-icon {
+    width: 18px;
+    height: 18px;
+    display: block;
+    color: white;
+}
+
+.isbn-item--empty {
+    padding: 20px 16px;
+    color: var(--apple-text-sub);
+    text-align: center;
+    font-size: 13px;
+}
+
+/* 하단 알약형 복수 버튼 레이아웃 */
+.button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-modal {
+    margin-bottom: 12px;
+    padding: 16px 0;
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: var(--apple-blue);
+    color: white;
+}
+
+.btn-primary:hover { background-color: var(--apple-blue-hover); }
+
+.btn-secondary {
+    background-color: var(--apple-gray-btn);
+    color: var(--apple-text-main);
+}
+
+.btn-secondary:hover { background-color: var(--apple-gray-btn-hover); }
+
+button:active { transform: scale(0.98); }
+
+/* 로딩 컴포넌트 */
+.full-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 2.5px solid rgba(0, 0, 0, 0.05);
+    border-top: 2.5px solid var(--apple-blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 14px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 13px;
+    color: var(--apple-text-sub);
+    font-weight: 500;
+}
+
+.completion-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+    background-color: #ffffff;
+}
+
+.completion-modal__content {
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 320px;
+    width: 100%;
+}
+
+.completion-modal__icon {
+    margin-bottom: 24px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.completion-modal__title {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    margin-bottom: 8px;
+    color: var(--apple-text-main);
+}
+
+.completion-modal__file-name {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--apple-text-sub);
+    margin-bottom: 40px;
+    word-break: break-all;
+    line-height: 1.4;
+    padding: 0 10px;
+}

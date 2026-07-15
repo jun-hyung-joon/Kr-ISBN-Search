@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kr-ISBN-Search</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- 바코드 스캐너 및 엑셀 생성 라이브러리 엔진 -->
+    <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <!-- 상태 제어 엔진 레이아웃 -->
+    <div id="app-container" class="main-layout">
+        
+        <!-- 1. 스캐너 화면 -->
+        <div id="scanner-section" class="screen">
+            <header class="app-header">
+                <h1>ISBN 스캐너</h1>
+                <p class="subtitle">도서 바코드를 인식하면 목록에 자동으로 누적됩니다.</p>
+            </header>
+            <div class="video-container">
+                <video id="video" autoplay playsinline></video>
+            </div>
+            <!-- 현재까지 누적된 수량 실시간 표시 -->
+            <div class="counter-badge">
+                현재 수집된 도서: <span id="scan-count">0</span>권
+            </div>
+        </div>
+
+        <!-- 2. 스캔 완료 및 중간 목록 제어 화면 -->
+        <div id="list-section" class="screen is-hidden">
+            <header class="app-header">
+                <h1>수집 목록</h1>
+                <p class="subtitle">현재까지 스캔된 ISBN 내역입니다.</p>
+            </header>
+            
+            <div class="list-container">
+                <ul id="isbn-ul"></ul>
+            </div>
+
+            <div class="button-group">
+                <button id="rescan-btn" class="btn-secondary">다시찍기</button>
+                <button id="process-btn" class="btn-primary">결과조회</button>
+            </div>
+        </div>
+
+        <!-- 3. 서지정보 API 연동 및 로딩 화면 -->
+        <div id="loading-screen" class="full-panel screen is-hidden">
+            <div class="spinner"></div>
+            <p class="loading-text" id="loading-status">국립중앙도서관 데이터 조회 중</p>
+        </div>
+        
+    </div>
+
+    <div id="completion-modal" class="completion-modal is-hidden" role="dialog" aria-modal="true" aria-labelledby="completion-title" aria-describedby="completion-file">
+        <div class="completion-modal__content">
+            <div class="completion-modal__icon" aria-hidden="true">
+                <svg width="72" height="72" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="14" y="6" width="36" height="52" rx="7" fill="#f5f5f7" stroke="#e8e8ed" stroke-width="2"/>
+                    <path d="M22 20H42M22 28H42M22 36H34" stroke="#86868b" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="46" cy="46" r="11" fill="#34c759"/>
+                    <path d="M41.5 46L44.5 49L50.5 43" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h1 id="completion-title" class="completion-modal__title">분석 완료</h1>
+            <p id="completion-file" class="completion-modal__file-name"></p>
+            <button id="ios-final-share-btn" class="btn-modal btn-primary">엑셀 공유 / 저장</button>
+            <button id="ios-cancel-btn" class="btn-modal btn-secondary">다시 스캔</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
